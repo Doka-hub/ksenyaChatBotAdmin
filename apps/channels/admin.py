@@ -1,5 +1,11 @@
 from django.contrib import admin
+from .models import Channel
 
-from apps.channels.models import Channel
 
-admin.site.register(Channel)
+class ChannelAdmin(admin.ModelAdmin):
+    list_display = ('name', 'url', 'amount', 'created_at')
+    search_fields = ('name',)
+    list_filter = ('created_at',)
+
+
+admin.site.register(Channel, ChannelAdmin)
