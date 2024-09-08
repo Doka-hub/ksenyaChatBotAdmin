@@ -4,7 +4,8 @@ from django.db import models
 class Channel(models.Model):
     name = models.CharField(max_length=50, verbose_name='Имя канала')
     url = models.URLField(verbose_name='Ссылка на канал')
-    amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Количество')
+    eur_amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Количество для Евросоюза')
+    rub_amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Количество для Республики Беларусь')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

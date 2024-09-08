@@ -1,16 +1,51 @@
-# (локальная разработка)
-
 version: '3.8'
 
 services:
+  db:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: kseniyabot
+      POSTGRES_USER: sayan
+      POSTGRES_PASSWORD: 1
+
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+
   web:
-    build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: gunicorn --timeout 120 KseniyaChatBotAdmin.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - .:/app
+      - static_volume:/staticfiles/
     ports:
       - "8000:8000"
+    depends_on:
+      - db
+      - redis
     environment:
-      - DEBUG=True
-      - SECRET_KEY=your_local_secret_key
-      - ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0
+      - DEBUG=False
+      - SECRET_KEY=django-insecure-!s7_a_$y*u+)=s!4-_hoxn@*!9gp&!izfr#&z$)15gn-#d7snr
+      - ALLOWED_HOSTS=*,0.0.0.0
+      - DATABASE_URL=postgres://sayan:1@db:5432/kseniyabot
+
+  celery:
+    build: .
+    command: celery -A KseniyaChatBotAdmin worker --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - DATABASE_URL=postgres://sayan:1@db:5432/kseniyabot
+
+volumes:
+  postgres_data:
+  static_volume:

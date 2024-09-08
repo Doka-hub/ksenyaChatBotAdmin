@@ -11,7 +11,7 @@ class TelegramUser(models.Model):
     first_name = models.CharField(max_length=30, verbose_name='Имя пользователя')
     last_name = models.CharField(max_length=30, null=True, blank=True, verbose_name='Фамилия пользователя')
     phone_number = models.CharField(max_length=30, null=True, blank=True, verbose_name='Номер телефона пользователя')
-    email = models.EmailField(verbose_name='')
+    email = models.EmailField(verbose_name='Почта')
     is_blocked = models.BooleanField()
     role = models.CharField(
         max_length=20,
