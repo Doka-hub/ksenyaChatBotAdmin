@@ -6,14 +6,16 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: kseniyabot
-      POSTGRES_USER: sayan
-      POSTGRES_PASSWORD: 1
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    restart: always
 
   redis:
     image: "redis:alpine"
     ports:
       - "6379:6379"  # Порт для подключения к Redis
+    restart: always
 
   web:
     build: .
@@ -25,13 +27,9 @@ services:
     depends_on:
       - db
       - redis
-    environment:
-      - DEBUG=False
-      - SECRET_KEY=django-insecure-!s7_a_$y*u+)=s!4-_hoxn@*!9gp&!izfr#&z$)15gn-#d7snr
-      - ALLOWED_HOSTS=*,0.0.0.0,localhost
-      - DATABASE_URL=postgres://sayan:1@db:5432/kseniyabot
-      - CELERY_BROKER_URL=redis://redis:6379/0  # Указываем адрес Redis
-      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    env_file:
+      - .env.prod
+    restart: always
 
   celery:
     build: .
@@ -41,10 +39,9 @@ services:
     depends_on:
       - db
       - redis
-    environment:
-      - CELERY_BROKER_URL=redis://redis:6379/0
-      - CELERY_RESULT_BACKEND=redis://redis:6379/0
-      - DATABASE_URL=postgres://myuser:mypassword@db:5432/mydatabase
+    env_file:
+      - .env.prod
+    restart: always
 
 volumes:
   postgres_data:

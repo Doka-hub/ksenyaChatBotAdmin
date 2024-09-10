@@ -1,4 +1,6 @@
 from django.apps import AppConfig
+from django.db.utils import OperationalError, ProgrammingError
+from django.db import connection
 
 
 class PaymentsConfig(AppConfig):
@@ -6,4 +8,4 @@ class PaymentsConfig(AppConfig):
     name = 'apps.payments'
 
     def ready(self):
-        import apps.payments.signals
+        from . import signals

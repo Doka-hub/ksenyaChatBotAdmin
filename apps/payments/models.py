@@ -12,6 +12,7 @@ class Payment(models.Model):
     stripe_id = models.CharField(max_length=255, verbose_name='Номер чека')
     amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Количество')
     is_paid = models.BooleanField(default=False, verbose_name='оплата заказа')
+    paid_at = models.DateTimeField(null=True)
     type = models.CharField(
         max_length=20,
         choices=PaymentType.choices,
@@ -22,14 +23,7 @@ class Payment(models.Model):
         return f'{self.user.username} --- {self.is_paid}'
 
 
-class PaymentDetails(models.Model):
-    value = models.CharField(max_length=100, verbose_name='Значение')
-
-    def __str__(self):
-        return f'{self.value}'
-
-
-class RBPaymentDetails(models.Model):
-    account_id = models.ForeignKey(TelegramUser, on_delete=models.CASCADE, verbose_name='Пользователь')
+class RBPaymentDetail(models.Model):
+    account_number = models.CharField(max_length=255, verbose_name='Номер счета')
     field1 = models.CharField(max_length=255, verbose_name='поле 1')
     field2 = models.CharField(max_length=255, verbose_name='поле 2')

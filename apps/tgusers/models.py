@@ -7,12 +7,14 @@ class TelegramUserRole(models.enums.TextChoices):
 
 
 class TelegramUser(models.Model):
+    user_id = models.CharField(max_length=255, verbose_name='ТГ юзер айди')
     username = models.CharField(max_length=30, verbose_name='Ник пользователя')
     first_name = models.CharField(max_length=30, verbose_name='Имя пользователя')
     last_name = models.CharField(max_length=30, null=True, blank=True, verbose_name='Фамилия пользователя')
     phone_number = models.CharField(max_length=30, null=True, blank=True, verbose_name='Номер телефона пользователя')
     email = models.EmailField(verbose_name='Почта')
-    is_blocked = models.BooleanField()
+    is_blocked = models.BooleanField(verbose_name='Заблокировал Бота')
+    is_active = models.BooleanField(default=True, verbose_name='Активен')
     role = models.CharField(
         max_length=20,
         choices=TelegramUserRole.choices,

@@ -88,6 +88,7 @@ DATABASES = {
 }
 
 if config('DATABASE_URL', default=None):
+    print(config('DATABASE_URL'))
     DATABASES['default'] = dj_database_url.parse(config('DATABASE_URL'))
 
 # Password validation

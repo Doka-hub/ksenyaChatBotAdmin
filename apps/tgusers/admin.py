@@ -7,5 +7,8 @@ class TelegramUserAdmin(admin.ModelAdmin):
     search_fields = ('username', 'email')
     list_filter = ('role', 'is_blocked', 'created_at')
 
+    def has_add_permission(self, request):
+        return False
+
 
 admin.site.register(TelegramUser, TelegramUserAdmin)

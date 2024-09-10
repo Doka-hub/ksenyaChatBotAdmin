@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Payment, PaymentDetails, RBPaymentDetails
+from .models import Payment, RBPaymentDetail
 
 
 def mark_as_paid(modeladmin, request, queryset):
@@ -16,16 +16,17 @@ class PaymentAdmin(admin.ModelAdmin):
     actions = [mark_as_paid]
 
 
-class PaymentDetailsAdmin(admin.ModelAdmin):
-    list_display = ('value',)
-
-
 class RBPaymentDetailsAdmin(admin.ModelAdmin):
-    list_display = ('account_id', 'field1', 'field2')
-    search_fields = ('account_id', 'field1', 'field2')
-    list_filter = ('account_id', 'field1', 'field2')
+    list_display = ('account_number', 'field1', 'field2')
+    search_fields = ('account_number', 'field1', 'field2')
+    list_filter = ('account_number', 'field1', 'field2')
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 
 admin.site.register(Payment, PaymentAdmin)
-admin.site.register(PaymentDetails, PaymentDetailsAdmin)
-admin.site.register(RBPaymentDetails, RBPaymentDetailsAdmin)
+admin.site.register(RBPaymentDetail, RBPaymentDetailsAdmin)
