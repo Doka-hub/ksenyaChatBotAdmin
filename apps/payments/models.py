@@ -17,6 +17,7 @@ class Payment(models.Model):
         max_length=20,
         choices=PaymentType.choices,
     )
+    payment_screenshot = models.ImageField(upload_to='payment_screenshots/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

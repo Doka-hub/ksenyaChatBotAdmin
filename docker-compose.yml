@@ -9,6 +9,7 @@ services:
     volumes:
       - .:/app
       - static_volume:/app/staticfiles
+      - media_volume:/app/media  # Добавляем том для медиафайлов
     ports:
       - "8000:8000"
     depends_on:

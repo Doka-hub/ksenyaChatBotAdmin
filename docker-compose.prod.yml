@@ -14,7 +14,7 @@ services:
   redis:
     image: "redis:alpine"
     ports:
-      - "6379:6379"  # Порт для подключения к Redis
+      - "6379:6379"
     restart: always
 
   web:
@@ -22,6 +22,7 @@ services:
     command: gunicorn KseniyaChatBotAdmin.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - .:/app
+      - media_volume:/app/media
     ports:
       - "8000:8000"
     depends_on:
@@ -45,3 +46,4 @@ services:
 
 volumes:
   postgres_data:
+  media_volume:
