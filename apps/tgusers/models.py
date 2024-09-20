@@ -24,3 +24,10 @@ class TelegramUser(models.Model):
 
     def __str__(self):
         return f'{self.username}'
+
+
+class StartMessage(models.Model):
+    start_message = models.CharField(verbose_name='Начальное сообщение', max_length=255)
+    text = models.TextField(verbose_name='Текст', blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
