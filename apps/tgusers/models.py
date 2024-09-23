@@ -27,7 +27,8 @@ class TelegramUser(models.Model):
 
 
 class StartMessage(models.Model):
-    start_message = models.CharField(verbose_name='Начальное сообщение', max_length=255)
     text = models.TextField(verbose_name='Текст', blank=True, null=True)
+    image = models.ImageField(verbose_name='Изображние', upload_to='images/', blank=True, null=True)
+    video = models.FileField(verbose_name='Видео' ,upload_to='videos/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

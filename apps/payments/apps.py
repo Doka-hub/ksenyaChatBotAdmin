@@ -9,3 +9,11 @@ class PaymentsConfig(AppConfig):
 
     def ready(self):
         from . import signals
+        from apps.payments.models import RBPaymentDetail
+
+        if RBPaymentDetail.objects.count() == 0:
+            RBPaymentDetail.objects.create(
+                account_number='1234567890',
+                field1='field1',
+                field2='field2',
+            )
