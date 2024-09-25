@@ -9,19 +9,9 @@ from .serializers import PaymentScreenshotSerializer
 class UploadScreenshotView(APIView):
     def post(self, request):
         payment_id = request.data.get('payment_id')
-        if 'payment_id' not in request.data:
-            return Response({"Ошибка": "Поле 'payment_id' не передано"}, status=status.HTTP_400_BAD_REQUEST)
-        if not payment_id:
-            return Response({"Ошибка": "Поле 'payment_id' не может быть пустым"}, status=status.HTTP_400_BAD_REQUEST)
-
-        payment = get_object_or_404(Payment, id=payment_id)
-
         screenshot_file = request.FILES.get('screenshot')
-        if 'screenshot' not in request.FILES:
-            return Response({"Ошибка": "Файл 'screenshot' не передан"}, status=status.HTTP_400_BAD_REQUEST)
-        if not screenshot_file:
-            return Response({"Ошибка": "Файл 'screenshot' не может быть пустым"}, status=status.HTTP_400_BAD_REQUEST)
-
+        
+        payment = get_object_or_404(Payment, id=payment_id)
         serializer = PaymentScreenshotSerializer(payment, data={'payment_screenshot': screenshot_file}, partial=True)
 
         if serializer.is_valid():
