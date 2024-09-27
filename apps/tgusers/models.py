@@ -7,28 +7,64 @@ class TelegramUserRole(models.enums.TextChoices):
 
 
 class TelegramUser(models.Model):
-    user_id = models.CharField(max_length=255, verbose_name='ТГ юзер айди')
-    username = models.CharField(max_length=30, verbose_name='Ник пользователя')
-    first_name = models.CharField(max_length=30, verbose_name='Имя пользователя')
-    last_name = models.CharField(max_length=30, null=True, blank=True, verbose_name='Фамилия пользователя')
-    phone_number = models.CharField(max_length=30, null=True, blank=True, verbose_name='Номер телефона пользователя')
-    email = models.EmailField(verbose_name='Почта')
-    is_blocked = models.BooleanField(verbose_name='Заблокировал Бота')
+    class Meta:
+        db_table = 'tguser'
+
+    user_id = models.CharField(max_length=255, verbose_name='Telegram ID')
+    username = models.CharField(max_length=30, verbose_name='Никейм')
+
+    first_name = models.CharField(
+        max_length=30,
+        blank=True,
+        null=True,
+        verbose_name='Имя',
+    )
+    last_name = models.CharField(
+        max_length=30,
+        null=True,
+        blank=True,
+        verbose_name='Фамилия',
+    )
+
+    phone_number = models.CharField(
+        max_length=30,
+        null=True,
+        blank=True,
+        verbose_name='Номер Телефона',
+    )
+    email = models.EmailField(blank=True, null=True, verbose_name='Почта')
+
+    is_bot_blocked = models.BooleanField(verbose_name='Заблокировал Бота')
     is_active = models.BooleanField(default=True, verbose_name='Активен')
+
     role = models.CharField(
         max_length=20,
         choices=TelegramUserRole.choices,
         verbose_name='Роль'
     )
-    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'{self.username}'
 
 
 class StartMessage(models.Model):
+    class Meta:
+        db_table = 'startmessage'
+
     text = models.TextField(verbose_name='Текст', blank=True, null=True)
-    image = models.ImageField(verbose_name='Изображние', upload_to='images/', blank=True, null=True)
-    video = models.FileField(verbose_name='Видео' ,upload_to='videos/', blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    photo = models.ImageField(verbose_name='Изображние', upload_to='images/', blank=True, null=True)
+    video = models.FileField(verbose_name='Видео', upload_to='videos/', blank=True, null=True)
+
+    def get_photo_url(self):
+        if self.photo:
+            photo_url = 'http://localhost:8001' + self.photo.url
+        else:
+            photo_url = None
+        return photo_url
+
+    def get_video_url(self):
+        if self.video:
+            video_url = 'http://localhost:8001' + self.video.url
+        else:
+            video_url = None
+        return video_url

@@ -1,20 +1,21 @@
-from .models import StartMessage
+import requests
 from django.db.models.signals import post_save, post_migrate
 from django.dispatch import receiver
-import requests
+
+from .models import StartMessage
 
 
 @receiver(post_save, sender=StartMessage)
-def send_request_on_update(sender, instance, created, **kwargs):
+def send_request_on_update(sender, instance: StartMessage, created, **kwargs):
     if not created:  # Проверяем, что это обновление
-        url = 'https://httpbin.org/post'  # Замените на нужный URL
+        url = 'http://localhost:8000/api/utils/start-message'  # Замените на нужный URL
 
         # Подготовка данных для отправки
         data = {
             'id': instance.id,
             'text': instance.text,
-            'created_at': instance.created_at.isoformat(),
-            'updated_at': instance.updated_at.isoformat(),
+            'photo': instance.get_photo_url(),
+            'video': instance.get_video_url(),
         }
 
         # Отправка POST-запроса
@@ -24,10 +25,3 @@ def send_request_on_update(sender, instance, created, **kwargs):
             print("Запрос успешно отправлен!")  # Принт для подтверждения
         except requests.exceptions.RequestException as e:
             print(f"Ошибка при отправке запроса: {e}")
-
-
-@receiver(post_migrate)
-def create_default_start_message(sender, **kwargs):
-    if sender.name == 'your_app_name':
-        if not StartMessage.objects.exists():
-            StartMessage.objects.create(start_message='Начальное сообщение по умолчанию', text='Текст по умолчанию')

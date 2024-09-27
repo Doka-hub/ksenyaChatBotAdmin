@@ -61,7 +61,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'KseniyaChatBotAdmin.urls'
+ROOT_URLCONF = 'main.urls'
 
 TEMPLATES = [
     {
@@ -79,21 +79,45 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'KseniyaChatBotAdmin.wsgi.application'
+WSGI_APPLICATION = 'main.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+
+BOT_DB_ENGINE = config('BOT_DB_ENGINE')
+BOT_DB_NAME = config('BOT_DB_NAME')
+BOT_DB_HOST = config('BOT_DB_HOST')
+BOT_DB_PORT = config('BOT_DB_PORT')
+BOT_DB_USER = config('BOT_DB_USER')
+BOT_DB_PASSWORD = config('BOT_DB_PASSWORD')
+
+DB_ENGINE = config('DB_ENGINE')
+DB_NAME = config('DB_NAME')
+DB_HOST = config('DB_HOST')
+DB_PORT = config('DB_PORT')
+DB_USER = config('DB_USER')
+DB_PASSWORD = config('DB_PASSWORD')
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': DB_ENGINE,
+        'NAME': DB_NAME,
+        'USER': DB_USER,
+        'PASSWORD': DB_PASSWORD,
+        'HOST': DB_HOST,
+        'PORT': DB_PORT,
+    },
+    'bot': {
+        'ENGINE': BOT_DB_ENGINE,
+        'NAME': BOT_DB_NAME,
+        'USER': BOT_DB_USER,
+        'PASSWORD': BOT_DB_PASSWORD,
+        'HOST': BOT_DB_HOST,
+        'PORT': BOT_DB_PORT,
+    },
 }
-
-if config('DATABASE_URL', default=None):
-    print(config('DATABASE_URL'))
-    DATABASES['default'] = dj_database_url.parse(config('DATABASE_URL'))
+DATABASE_ROUTERS = ['main.database_router.DBRouter']
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

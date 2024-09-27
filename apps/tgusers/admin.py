@@ -1,20 +1,85 @@
 from django.contrib import admin
-from .models import TelegramUser, StartMessage
 from django.core.exceptions import ValidationError
+from django.utils.html import format_html
+
+from .models import TelegramUser, StartMessage
 
 
 class TelegramUserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'first_name', 'last_name', 'phone_number', 'email', 'is_blocked', 'role', 'created_at')
+    list_display = (
+        'id',
+        'role',
+
+        'username',
+        'username_link',
+
+        'first_name',
+        'last_name',
+
+        'phone_number',
+        'email',
+
+        'is_bot_blocked',
+        'is_active',
+    )
     search_fields = ('username', 'email')
-    list_filter = ('role', 'is_blocked', 'created_at')
+    list_filter = ('role', 'is_bot_blocked')
+
+    fieldsets = (
+        (
+            'Инфо', {
+                'fields': (
+                    'phone_number',
+                    'email',
+                    'role',
+                ),
+            },
+        ),
+        (
+            'ТГ Инфо', {
+                'fields': (
+                    'user_id',
+                    'username',
+
+                    'first_name',
+                    'last_name',
+
+                    'is_bot_blocked',
+                    'is_active',
+                )
+            },
+        ),
+    )
+
+    def username_link(self, obj: TelegramUser):
+        if obj.username:
+            url = f'https://t.me/{obj.username}/'
+            target = '_blank'
+            username = format_html(
+                '<a href="{}" target="{}" style="font-size: 10px!important">перейти</a>',
+                url,
+                target,
+            )
+        else:
+            username = '-'
+
+        return username
+
+    username_link.short_description = '(ТГ ссылка)'
 
     def has_add_permission(self, request):
         return False
 
+    def has_delete_permission(self, request, obj=None):
+        return False
+
 
 class StartMessageAdmin(admin.ModelAdmin):
-    list_display = ('text', 'image', 'video', 'created_at', 'updated_at')
-    readonly_fields = ('created_at', 'updated_at')
+    list_display = (
+        'text',
+        'photo',
+        'video',
+    )
 
     def has_add_permission(self, request):
         return False
@@ -27,7 +92,10 @@ class StartMessageAdmin(admin.ModelAdmin):
         new_video = form.cleaned_data.get('video')
 
         if (new_image and obj.video) or (new_video and obj.image):
-            form.add_error(None, ValidationError("Должно быть заполнено только одно поле: изображение или видео."))
+            form.add_error(
+                None,
+                ValidationError("Должно быть заполнено только одно поле: изображение или видео.")
+            )
             return
 
         if new_video:

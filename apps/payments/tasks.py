@@ -4,7 +4,7 @@ import requests
 
 @shared_task
 def send_payment_request(payment_id):
-    url = 'https://httpbin.org/post'
+    url = 'https://localhost:8000/api/payments/rb-payment-paid'
     data = {'payment_id': payment_id}
     try:
         response = requests.post(url, json=data)
