@@ -1,5 +1,8 @@
+from datetime import datetime
+
 from django.db import models
 
+from apps.channels.models import Channel
 from apps.tgusers.models import TelegramUser
 
 
@@ -48,3 +51,21 @@ class RBDetail(models.Model):
     account_number = models.CharField(max_length=255, verbose_name='Номер счета')
     field_1 = models.CharField(max_length=255, verbose_name='поле 1')
     field_2 = models.CharField(max_length=255, verbose_name='поле 2')
+
+
+class Subscription(models.Model):
+    payment = models.OneToOneField(
+        Payment,
+        related_name='subscription',
+        on_delete='CASCADE'
+    )
+    user = models.ForeignKey(TelegramUser, related_name='subscriptions', on_delete='CASCADE')
+    channel = models.ForeignKey(
+        Channel,
+        related_name='subscriptions',
+        on_delete='SET_NULL',
+        null=True,
+    )
+
+    created_at = models.DateTimeField(default=datetime.now)
+    active_by = models.DateTimeField(null=True)

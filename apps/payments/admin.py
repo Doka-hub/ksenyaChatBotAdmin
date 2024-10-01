@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-from .models import Payment, RBDetail
+from .models import Payment, RBDetail, Subscription
 
 
 def mark_as_paid(modeladmin, request, queryset):
@@ -70,7 +70,7 @@ class PaymentAdmin(admin.ModelAdmin):
     display_screenshot.short_description = 'Payment Screenshot'
 
 
-class RBDetailsAdmin(admin.ModelAdmin):
+class RBDetailAdmin(admin.ModelAdmin):
     list_display = ('account_number', 'field_1', 'field_2')
     search_fields = ('account_number', 'field_1', 'field_2')
     list_filter = ('account_number', 'field_1', 'field_2')
@@ -82,5 +82,17 @@ class RBDetailsAdmin(admin.ModelAdmin):
         return False
 
 
+class SubscriptionAdmin(admin.ModelAdmin):
+    list_display = ('user', 'channel', 'created_at', 'active_by')
+    search_fields = ('user', )
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+
 admin.site.register(Payment, PaymentAdmin)
-admin.site.register(RBDetail, RBDetailsAdmin)
+admin.site.register(RBDetail, RBDetailAdmin)
+admin.site.register(Subscription, SubscriptionAdmin)
