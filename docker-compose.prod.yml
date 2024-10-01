@@ -8,26 +8,26 @@ services:
     env_file:
       - .env
     networks:
-      - tg-ksenya-chat-bot
+      - bot_default
     depends_on:
       - redis_admin
-    deploy:
-      resources:
-        limits:
-          cpus: '1'
-          memory: 1G
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: '1'
+#          memory: 1G
 
   redis_admin:
     image: redis:alpine
     restart: unless-stopped
     networks:
-      - tg-ksenya-chat-bot
+      - bot_default
     volumes:
       - redis-data:/data
-    deploy:
-      resources:
-        limits:
-          memory: 512M
+#    deploy:
+#      resources:
+#        limits:
+#          memory: 512M
 
   admin:
     build: .
@@ -38,23 +38,26 @@ services:
       - static-files:/home/app/static
       - media-files:/home/app/media
     networks:
-      - tg-ksenya-chat-bot
+      - bot_default
     ports:
-    - "8031:8000"
-    deploy:
-      resources:
-        limits:
-          cpus: '1'
-          memory: 1G
+    - "8001:8001"
+ #   deploy:
+ #     resources:
+ #       limits:
+ #         cpus: '1'
+ #         memory: 1G
 
 volumes:
   static-files:
   media-files:
-    external: true
-    name: tg-ksenya-chat-bot_media-files
   redis-data:
 
 networks:
-  tg-ksenya-chat-bot:
-    name: tg-ksenya-chat-bot_default
+  bot_default:
     external: true
+#  bot_tg-ksenya-chat-bot:
+#    name: bot_tg-ksenya-chat-bot
+#    external: true
+#  tg-ksenya-chat-bot:
+#    name: tg-ksenya-chat-bot_default
+#    external: true

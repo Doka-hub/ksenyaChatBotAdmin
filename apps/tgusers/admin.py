@@ -88,10 +88,10 @@ class StartMessageAdmin(admin.ModelAdmin):
         return False
 
     def save_model(self, request, obj, form, change):
-        new_image = form.cleaned_data.get('image')
+        new_image = form.cleaned_data.get('photo')
         new_video = form.cleaned_data.get('video')
 
-        if (new_image and obj.video) or (new_video and obj.image):
+        if (new_image and obj.video) or (new_video and obj.photo):
             form.add_error(
                 None,
                 ValidationError("Должно быть заполнено только одно поле: изображение или видео.")
@@ -99,9 +99,9 @@ class StartMessageAdmin(admin.ModelAdmin):
             return
 
         if new_video:
-            if obj.image:
-                obj.image.delete(save=False)
-                obj.image = None
+            if obj.photo:
+                obj.photo.delete(save=False)
+                obj.photo = None
 
         if new_image:
             if obj.video:
@@ -112,7 +112,7 @@ class StartMessageAdmin(admin.ModelAdmin):
 
     def clean(self):
         cleaned_data = super().clean()
-        image = cleaned_data.get('image')
+        image = cleaned_data.get('photo')
         video = cleaned_data.get('video')
 
         if (image and video) or (not image and not video):

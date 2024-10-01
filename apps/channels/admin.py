@@ -3,9 +3,9 @@ from .models import Channel
 
 
 class ChannelAdmin(admin.ModelAdmin):
-    list_display = ('name', 'url', 'eur_amount', 'rub_amount', 'created_at')
+    list_display = ('name', 'url', 'eur_amount', 'rub_amount')
     search_fields = ('name',)
-    list_filter = ('created_at',)
+#    list_filter = ('created_at',)
 
     def has_add_permission(self, request):
         return False

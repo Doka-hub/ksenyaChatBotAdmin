@@ -8,7 +8,7 @@ from .models import StartMessage
 @receiver(post_save, sender=StartMessage)
 def send_request_on_update(sender, instance: StartMessage, created, **kwargs):
     if not created:  # Проверяем, что это обновление
-        url = 'http://localhost:8000/api/utils/start-message'  # Замените на нужный URL
+        url = 'http://backend:8000/api/utils/start-message'  # Замените на нужный URL
 
         # Подготовка данных для отправки
         data = {

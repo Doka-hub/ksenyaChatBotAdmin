@@ -4,8 +4,8 @@ from apps.tgusers.models import TelegramUser
 
 
 class PaymentType(models.enums.TextChoices):
-    EU = 'EU', 'Евро'
-    RB = 'RB', 'Белорусский Рубль'
+    EU = 'eur', 'Евро'
+    RB = 'rub', 'Белорусский Рубль'
 
 
 class Payment(models.Model):
@@ -46,5 +46,5 @@ class RBDetail(models.Model):
         db_table = 'rbdetails'
 
     account_number = models.CharField(max_length=255, verbose_name='Номер счета')
-    field1 = models.CharField(max_length=255, verbose_name='поле 1')
-    field2 = models.CharField(max_length=255, verbose_name='поле 2')
+    field_1 = models.CharField(max_length=255, verbose_name='поле 1')
+    field_2 = models.CharField(max_length=255, verbose_name='поле 2')

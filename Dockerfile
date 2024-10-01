@@ -33,7 +33,7 @@ RUN mkdir -p /home/app/data/media
 # Prepare app bin
 #COPY --chown=app ./bin /home/app/bin
 COPY ./bin /home/app/bin
-RUN chmod -R +xr /home/app/bin
+RUN chmod -R +x /home/app/bin
 ENV PATH="/home/app/bin:${PATH}"
 
 #COPY --chown=app ./ /home/app
@@ -45,6 +45,6 @@ WORKDIR /home/app
 ENV PYTHONPATH="/home/app:$PYTHONPATH"
 ENV TZ="Asia/Dubai"
 
-EXPOSE 8031
+EXPOSE 8001
 
 ENTRYPOINT ["entrypoint.sh"]

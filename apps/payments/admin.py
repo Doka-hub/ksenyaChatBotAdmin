@@ -71,9 +71,9 @@ class PaymentAdmin(admin.ModelAdmin):
 
 
 class RBDetailsAdmin(admin.ModelAdmin):
-    list_display = ('account_number', 'field1', 'field2')
-    search_fields = ('account_number', 'field1', 'field2')
-    list_filter = ('account_number', 'field1', 'field2')
+    list_display = ('account_number', 'field_1', 'field_2')
+    search_fields = ('account_number', 'field_1', 'field_2')
+    list_filter = ('account_number', 'field_1', 'field_2')
 
     def has_add_permission(self, request):
         return False

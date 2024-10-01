@@ -57,14 +57,14 @@ class StartMessage(models.Model):
 
     def get_photo_url(self):
         if self.photo:
-            photo_url = 'http://localhost:8001' + self.photo.url
+            photo_url = 'https://bot.chertovich.com' + self.photo.url
         else:
             photo_url = None
         return photo_url
 
     def get_video_url(self):
         if self.video:
-            video_url = 'http://localhost:8001' + self.video.url
+            video_url = 'https://bot.chertovich.com' + self.video.url
         else:
             video_url = None
         return video_url

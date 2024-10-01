@@ -12,8 +12,8 @@ class PaymentsConfig(AppConfig):
         from apps.payments.models import RBDetail
 
         if RBDetail.objects.count() == 0:
-            RBPaymentDetail.objects.create(
+            RBDetail.objects.create(
                 account_number='1234567890',
-                field1='field1',
-                field2='field2',
+                field_1='field1',
+                field_2='field2',
             )
