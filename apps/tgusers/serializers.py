@@ -12,14 +12,14 @@ class StartMessageSerializer(serializers.ModelSerializer):
 
     def get_photo_url(self, obj):
         if obj.photo:
-            photo_url = 'http://localhost:8001' + obj.photo.url
+            photo_url = 'https://bot.chertovich.com' + obj.photo.url
         else:
             photo_url = None
         return photo_url
 
     def get_video_url(self, obj):
         if obj.video:
-            video_url = 'http://localhost:8001' + obj.video.url
+            video_url = 'https://bot.chertovich.com' + obj.video.url
         else:
             video_url = None
         return video_url
