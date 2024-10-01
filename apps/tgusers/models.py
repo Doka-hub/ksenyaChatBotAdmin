@@ -54,3 +54,17 @@ class StartMessage(models.Model):
     text = models.TextField(verbose_name='Текст', blank=True, null=True)
     photo = models.ImageField(verbose_name='Изображние', upload_to='images/', blank=True, null=True)
     video = models.FileField(verbose_name='Видео', upload_to='videos/', blank=True, null=True)
+
+    def get_photo_url(self):
+        if self.photo:
+            photo_url = 'https://bot.chertovich.com' + self.photo.url
+        else:
+            photo_url = None
+        return photo_url
+
+    def get_video_url(self):
+        if self.video:
+            video_url = 'https://bot.chertovich.com' + self.video.url
+        else:
+            video_url = None
+        return video_url
