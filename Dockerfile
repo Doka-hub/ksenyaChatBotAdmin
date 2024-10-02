@@ -43,7 +43,7 @@ RUN chmod -R +xr /home/app
 
 WORKDIR /home/app
 ENV PYTHONPATH="/home/app:$PYTHONPATH"
-ENV TZ="Asia/Dubai"
+ENV TZ="UTC"
 
 EXPOSE 8001
 
