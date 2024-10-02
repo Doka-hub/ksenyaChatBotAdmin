@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from django.contrib.admin.actions import delete_selected
 
 from .models import Payment, RBDetail, Subscription
 
@@ -15,7 +16,7 @@ class PaymentAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'stripe_id', 'amount', 'is_paid', 'type', 'created_at')
     search_fields = ('user__username', 'stripe_id')
     list_filter = ('is_paid', 'type', 'created_at')
-    actions = (mark_as_paid,)
+    actions = (delete_selected, mark_as_paid,)
 
     readonly_fields = (
         'user',
@@ -24,6 +25,7 @@ class PaymentAdmin(admin.ModelAdmin):
         'stripe_id',
         'created_at',
         'screenshot',
+        'paid_at',
     )
     fieldsets = (
         (

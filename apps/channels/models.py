@@ -9,7 +9,7 @@ class Channel(models.Model):
     url = models.URLField(verbose_name='Ссылка на канал')
     eur_amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Сумма в Евро')
     rub_amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Сумма в Рублях')
-    duration = models.IntegerField(verbose_name='Длительность подписки')
+    duration = models.IntegerField(verbose_name='Длительность подписки (день)')
 
     def __str__(self):
         return f'{self.name}'
