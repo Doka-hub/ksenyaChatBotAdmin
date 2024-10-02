@@ -12,5 +12,3 @@ def payment_created(sender, instance, created, **kwargs):
     if not created:
         if instance.is_paid is True and instance.type == PaymentType.RB:
             send_payment_request.delay(instance.id)
-            instance.paid_at = datetime.now ()
-            instance.save()
