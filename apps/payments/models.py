@@ -57,16 +57,19 @@ class RBDetail(models.Model):
 
 
 class Subscription(models.Model):
+    class Meta:
+        db_table = 'subscription'
+
     payment = models.OneToOneField(
         Payment,
         related_name='subscription',
-        on_delete='CASCADE'
+        on_delete=models.CASCADE,
     )
-    user = models.ForeignKey(TelegramUser, related_name='subscriptions', on_delete='CASCADE')
+    user = models.ForeignKey(TelegramUser, related_name='subscriptions', on_delete=models.CASCADE)
     channel = models.ForeignKey(
         Channel,
         related_name='subscriptions',
-        on_delete='SET_NULL',
+        on_delete=models.SET_NULL,
         null=True,
     )
 
