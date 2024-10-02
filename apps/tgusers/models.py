@@ -44,7 +44,7 @@ class TelegramUser(models.Model):
     )
 
     def __str__(self):
-        return f'{self.username}'
+        return self.username or self.first_name or self.user_id
 
 
 class StartMessage(models.Model):
