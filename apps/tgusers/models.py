@@ -9,6 +9,8 @@ class TelegramUserRole(models.enums.TextChoices):
 class TelegramUser(models.Model):
     class Meta:
         db_table = 'tguser'
+        verbose_name = 'ТГ Пользователь'
+        verbose_name_plural = 'ТГ Пользователи'
 
     user_id = models.CharField(max_length=255, verbose_name='Telegram ID')
     username = models.CharField(max_length=30, blank=True, null=True, verbose_name='Никейм')
