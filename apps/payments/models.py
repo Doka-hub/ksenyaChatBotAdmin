@@ -41,7 +41,7 @@ class Payment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создан (дата)')
 
     def __str__(self):
-        return f'Платеж #{self.id} ({self.user.username})'
+        return f'Платеж #{self.id} ({self.user})'
 
 
 class RBDetail(models.Model):
@@ -51,6 +51,9 @@ class RBDetail(models.Model):
     account_number = models.CharField(max_length=255, verbose_name='Номер счета')
     field_1 = models.CharField(max_length=255, verbose_name='поле 1')
     field_2 = models.CharField(max_length=255, verbose_name='поле 2')
+
+    def __str__(self):
+        return 'Платежи РБ Счета'
 
 
 class Subscription(models.Model):
@@ -69,3 +72,6 @@ class Subscription(models.Model):
 
     created_at = models.DateTimeField(default=datetime.now)
     active_by = models.DateTimeField(null=True)
+
+    def __str__(self):
+        return f'Подписка #{self.id} ({self.user})'

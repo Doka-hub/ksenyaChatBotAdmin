@@ -68,3 +68,6 @@ class StartMessage(models.Model):
         else:
             video_url = None
         return video_url
+
+    def __str__(self):
+        return 'Приветсвенное сообщение'
