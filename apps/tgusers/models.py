@@ -51,6 +51,9 @@ class StartMessage(models.Model):
     class Meta:
         db_table = 'startmessage'
 
+        verbose_name = 'Приветсвенное Сообщение'
+        verbose_name_plural = 'Приветсвенное Сообщение'
+
     text = models.TextField(verbose_name='Текст', blank=True, null=True)
     photo = models.ImageField(verbose_name='Изображние', upload_to='images/', blank=True, null=True)
     video = models.FileField(verbose_name='Видео', upload_to='videos/', blank=True, null=True)

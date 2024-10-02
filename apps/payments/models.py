@@ -15,6 +15,9 @@ class Payment(models.Model):
     class Meta:
         db_table = 'payment'
 
+        verbose_name = 'Платеж'
+        verbose_name_plural = 'Платежи'
+
     def upload_to(self, filename):
         return f'payments/screenshots/{self.id}/{filename}'
 
@@ -48,6 +51,9 @@ class RBDetail(models.Model):
     class Meta:
         db_table = 'rbdetails'
 
+        verbose_name = 'Детали РБ Счета'
+        verbose_name_plural = 'Детали РБ Счета'
+
     account_number = models.CharField(max_length=255, verbose_name='Номер счета')
     field_1 = models.CharField(max_length=255, verbose_name='поле 1')
     field_2 = models.CharField(max_length=255, verbose_name='поле 2')
@@ -59,6 +65,9 @@ class RBDetail(models.Model):
 class Subscription(models.Model):
     class Meta:
         db_table = 'subscription'
+
+        verbose_name = 'Подписка'
+        verbose_name_plural = 'Подписки'
 
     payment = models.OneToOneField(
         Payment,

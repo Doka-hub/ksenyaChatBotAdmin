@@ -4,6 +4,8 @@ from django.db import models
 class Channel(models.Model):
     class Meta:
         db_table = 'channel'
+        verbose_name = 'Канал'
+        verbose_name_plural = 'Каналы'
 
     name = models.CharField(max_length=50, verbose_name='Имя канала')
     url = models.URLField(verbose_name='Ссылка на канал')
