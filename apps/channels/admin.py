@@ -3,7 +3,7 @@ from .models import Channel
 
 
 class ChannelAdmin(admin.ModelAdmin):
-    list_display = ('name', 'url', 'eur_amount', 'rub_amount', 'duration')
+    list_display = ('id', 'name', 'url', 'eur_amount', 'rub_amount', 'duration')
     list_editable = ('name', 'url', 'eur_amount', 'rub_amount', 'duration')
 
     def has_add_permission(self, request):
