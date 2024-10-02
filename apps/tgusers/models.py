@@ -11,7 +11,7 @@ class TelegramUser(models.Model):
         db_table = 'tguser'
 
     user_id = models.CharField(max_length=255, verbose_name='Telegram ID')
-    username = models.CharField(max_length=30, verbose_name='Никейм')
+    username = models.CharField(max_length=30, blank=True, null=True, verbose_name='Никейм')
 
     first_name = models.CharField(
         max_length=30,
