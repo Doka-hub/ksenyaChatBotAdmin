@@ -47,6 +47,7 @@ class PaymentAdmin(admin.ModelAdmin):
             'Статусы', {
                 'fields': (
                     'screenshot',
+                    'paid_at',
                     'is_paid',
                 )
             },
