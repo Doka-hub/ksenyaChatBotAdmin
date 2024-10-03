@@ -54,9 +54,7 @@ class RBDetail(models.Model):
         verbose_name = 'Детали РБ Счета'
         verbose_name_plural = 'Детали РБ Счета'
 
-    account_number = models.CharField(max_length=255, verbose_name='Номер счета')
-    field_1 = models.CharField(max_length=255, verbose_name='поле 1')
-    field_2 = models.CharField(max_length=255, verbose_name='поле 2')
+    text = models.TextField(verbose_name='Текст')
 
     def __str__(self):
         return 'Платежи РБ Счета'

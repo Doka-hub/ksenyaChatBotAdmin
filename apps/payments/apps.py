@@ -1,6 +1,4 @@
 from django.apps import AppConfig
-from django.db.utils import OperationalError, ProgrammingError
-from django.db import connection
 
 
 class PaymentsConfig(AppConfig):
@@ -14,7 +12,5 @@ class PaymentsConfig(AppConfig):
 
         if RBDetail.objects.count() == 0:
             RBDetail.objects.create(
-                account_number='1234567890',
-                field_1='field1',
-                field_2='field2',
+                text='text',
             )

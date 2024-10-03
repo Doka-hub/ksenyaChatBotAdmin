@@ -29,7 +29,7 @@ class PaymentAdmin(admin.ModelAdmin):
     )
     fieldsets = (
         (
-            'Инфо', {
+            'Info', {
                 'fields': (
                     'user',
                     'amount',
@@ -46,9 +46,9 @@ class PaymentAdmin(admin.ModelAdmin):
             },
         ),
         (
-            'Статусы', {
+            'Statuses', {
                 'fields': (
-                    'screenshot',
+                    'display_screenshot',
                     'paid_at',
                     'is_paid',
                 )
@@ -74,9 +74,7 @@ class PaymentAdmin(admin.ModelAdmin):
 
 
 class RBDetailAdmin(admin.ModelAdmin):
-    list_display = ('account_number', 'field_1', 'field_2')
-    search_fields = ('account_number', 'field_1', 'field_2')
-    list_filter = ('account_number', 'field_1', 'field_2')
+    list_display = ('id', 'text')
 
     def has_add_permission(self, request):
         return False
@@ -86,8 +84,8 @@ class RBDetailAdmin(admin.ModelAdmin):
 
 
 class SubscriptionAdmin(admin.ModelAdmin):
-    list_display = ('user', 'channel', 'created_at', 'active_by')
-    search_fields = ('user', )
+    list_display = ('id', 'user', 'channel', 'created_at', 'active_by')
+    search_fields = ('user',)
 
     def has_add_permission(self, request):
         return False
