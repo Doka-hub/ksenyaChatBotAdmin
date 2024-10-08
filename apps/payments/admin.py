@@ -26,6 +26,7 @@ class PaymentAdmin(admin.ModelAdmin):
         'created_at',
         'screenshot',
         'paid_at',
+        'display_screenshot',
     )
     fieldsets = (
         (
