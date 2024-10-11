@@ -36,6 +36,8 @@ class TelegramUser(models.Model):
     )
     email = models.EmailField(blank=True, null=True, verbose_name='Почта')
 
+    policy_confirmed = models.BooleanField(default=False)
+
     is_bot_blocked = models.BooleanField(verbose_name='Заблокировал Бота')
     is_active = models.BooleanField(default=True, verbose_name='Активен')
 

@@ -19,15 +19,17 @@ class TelegramUserAdmin(admin.ModelAdmin):
         'phone_number',
         'email',
 
+        'policy_confirmed',
+
         'is_bot_blocked',
         'is_active',
     )
     search_fields = ('username', 'email')
-    list_filter = ('role', 'is_bot_blocked')
+    list_filter = ('role', 'policy_confirmed', 'is_bot_blocked', 'is_active')
 
     fieldsets = (
         (
-            'Инфо', {
+            'Info', {
                 'fields': (
                     'phone_number',
                     'email',
@@ -36,13 +38,15 @@ class TelegramUserAdmin(admin.ModelAdmin):
             },
         ),
         (
-            'ТГ Инфо', {
+            'TG Info', {
                 'fields': (
                     'user_id',
                     'username',
 
                     'first_name',
                     'last_name',
+
+                    'policy_confirmed',
 
                     'is_bot_blocked',
                     'is_active',
