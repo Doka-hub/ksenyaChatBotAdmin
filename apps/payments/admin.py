@@ -63,8 +63,8 @@ class PaymentAdmin(admin.ModelAdmin):
     def display_screenshot(self, obj: Payment):
         if obj.screenshot:
             return format_html(
-                '<img src="{}" width="150" height="150" />',
-                obj.screenshot.url
+                '<a href="{url}" target="_blank"><img src="{url}" width="150" height="150" /></a>',
+                url=obj.screenshot.url,
             )
         return "No screenshot available"
 
