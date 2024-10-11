@@ -27,6 +27,10 @@ class TelegramUserAdmin(admin.ModelAdmin):
     search_fields = ('username', 'email')
     list_filter = ('role', 'policy_confirmed', 'is_bot_blocked', 'is_active')
 
+    readonly_fields = (
+        'policy_confirmed',
+    )
+
     fieldsets = (
         (
             'Info', {
