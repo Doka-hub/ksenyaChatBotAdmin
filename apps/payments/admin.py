@@ -1,8 +1,11 @@
+from datetime import datetime
+
 from django.contrib import admin
 from django.utils.html import format_html
 from django.contrib.admin.actions import delete_selected
 
-from .models import Payment, RBDetail, Subscription
+from .models import PaymentType, Payment, RBDetail, Subscription
+from .tasks import send_payment_request
 
 
 def mark_as_paid(modeladmin, request, queryset):
@@ -67,7 +70,6 @@ class PaymentAdmin(admin.ModelAdmin):
                 url=obj.screenshot.url,
             )
         return "No screenshot available"
-
     display_screenshot.short_description = 'Payment Screenshot'
 
 

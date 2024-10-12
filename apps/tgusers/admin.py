@@ -97,33 +97,9 @@ class StartMessageAdmin(admin.ModelAdmin):
         new_video = form.cleaned_data.get('video')
 
         if (new_image and obj.video) or (new_video and obj.photo):
-            form.add_error(
-                None,
-                ValidationError("Должно быть заполнено только одно поле: изображение или видео.")
-            )
-            return
-
-        if new_video:
-            if obj.photo:
-                obj.photo.delete(save=False)
-                obj.photo = None
-
-        if new_image:
-            if obj.video:
-                obj.video.delete(save=False)
-                obj.video = None
+            raise ValidationError('Должно быть заполнено только одно поле: изображение или видео.')
 
         super().save_model(request, obj, form, change)
-
-    def clean(self):
-        cleaned_data = super().clean()
-        image = cleaned_data.get('photo')
-        video = cleaned_data.get('video')
-
-        if (image and video) or (not image and not video):
-            raise ValidationError("Должно быть заполнено только одно поле: изображение или видео.")
-
-        return cleaned_data
 
 
 admin.site.register(TelegramUser, TelegramUserAdmin)
