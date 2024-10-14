@@ -7,7 +7,6 @@ class PaymentsConfig(AppConfig):
     verbose_name = 'Платежи'
 
     def ready(self):
-        from . import signals
         from apps.payments.models import RBDetail
 
         if RBDetail.objects.count() == 0:

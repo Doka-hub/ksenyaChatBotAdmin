@@ -74,11 +74,11 @@ class PaymentAdmin(admin.ModelAdmin):
     display_screenshot.short_description = 'Payment Screenshot'
 
     def save_model(self, request, obj, form, change):
-        print(form)
-        print(change)
-        is_paid = form.cleaned_data.get('is_paid')
-        if is_paid and obj.type == PaymentType.RB:
-            send_payment_request.delay(obj.id)
+        if change:
+            # если объект изменен (а не создан)
+            is_paid = form.cleaned_data.get('is_paid')
+            if is_paid and obj.type == PaymentType.RB:
+                send_payment_request.delay(obj.id)
         super().save_model(request, obj, form, change)
 
 
