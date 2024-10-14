@@ -70,7 +70,16 @@ class PaymentAdmin(admin.ModelAdmin):
                 url=obj.screenshot.url,
             )
         return "No screenshot available"
+
     display_screenshot.short_description = 'Payment Screenshot'
+
+    def save_model(self, request, obj, form, change):
+        print(form)
+        print(change)
+        is_paid = form.cleaned_data.get('is_paid')
+        if is_paid and obj.type == PaymentType.RB:
+            send_payment_request.delay(obj.id)
+        super().save_model(request, obj, form, change)
 
 
 class RBDetailAdmin(admin.ModelAdmin):

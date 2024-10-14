@@ -4,13 +4,12 @@ from django.dispatch import receiver
 from .models import PaymentType, Payment
 from .tasks import send_payment_request
 
-
-@receiver(post_save, sender=Payment)
-def payment_created(sender, instance, created, **kwargs):
-    if not created:
-        if (
-                instance.is_paid is True and
-                instance.paid_at and
-                instance.type == PaymentType.RB
-        ):
-            send_payment_request.delay(instance.id)
+# @receiver(post_save, sender=Payment)
+# def payment_created(sender, instance, created, **kwargs):
+#     if not created:
+#         if (
+#                 instance.is_paid is True and
+#                 instance.paid_at and
+#                 instance.type == PaymentType.RB
+#         ):
+#             send_payment_request.delay(instance.id)
