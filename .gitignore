@@ -1,10 +1,13 @@
-__pycache__/
+.idea/
+media/
+
 .env
 .env.local
+db.env
 .venv
 .deployment/k8s/
 .secrets/
-
+dump.rdb
 test.py
 model_list.xlsx
 
@@ -211,13 +214,3 @@ terraform.rc
 
 # MacOS
 .DS_Store
-media/
-
-
-# GOOGLE
-credentials.json
-
-# Logs
-logs/
-logs/*
-.idea/
