@@ -51,6 +51,25 @@ class TelegramUser(models.Model):
         return self.username or self.first_name or self.user_id
 
 
+class ButtonMessage(models.Model):
+    class Type(models.TextChoices):
+        INLINE = 'INLINE', 'Inline'
+        KEYBOARD = 'KEYBOARD', 'Keyboard'
+
+    type = models.CharField(choices=Type.choices, verbose_name='Тип', max_length=10)
+    name = models.CharField(max_length=255, verbose_name='Название')
+    url = models.URLField(blank=True, null=True, verbose_name='Ссылка')
+    callback_data = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        verbose_name='Callback Data',
+    )
+
+    def __str__(self):
+        return f'{self.type} кнопка: {self.name}'
+
+
 class StartMessage(models.Model):
     class Meta:
         db_table = 'startmessage'
@@ -61,6 +80,7 @@ class StartMessage(models.Model):
     text = models.TextField(verbose_name='Текст', blank=True, null=True)
     photo = models.ImageField(verbose_name='Изображние', upload_to='images/', blank=True, null=True)
     video = models.FileField(verbose_name='Видео', upload_to='videos/', blank=True, null=True)
+    buttons = models.ManyToManyField(ButtonMessage, verbose_name='Кнопки', blank=True)
 
     def get_photo_url(self):
         if self.photo:
