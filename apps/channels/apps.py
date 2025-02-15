@@ -15,4 +15,5 @@ class ChannelsConfig(AppConfig):
                 url='https://webhook.site/4cea51a6-bc98-4718-9ddf-648a2aa5b461',
                 eur_amount='1000',
                 rub_amount='1000',
+                duration=30,
             )
