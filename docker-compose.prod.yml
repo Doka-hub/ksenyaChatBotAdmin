@@ -8,7 +8,7 @@ services:
     env_file:
       - .env
     networks:
-      - bot_default
+      - ksenia-chat-bot
     depends_on:
       - redis_admin
 #    deploy:
@@ -21,7 +21,7 @@ services:
     image: redis:alpine
     restart: unless-stopped
     networks:
-      - bot_default
+      - ksenia-chat-bot
     volumes:
       - redis-data:/data
 #    deploy:
@@ -38,7 +38,7 @@ services:
       - static-files:/home/app/static
       - media-files:/home/app/media
     networks:
-      - bot_default
+      - ksenia-chat-bot
     ports:
     - "8001:8001"
  #   deploy:
@@ -53,11 +53,6 @@ volumes:
   redis-data:
 
 networks:
-  bot_default:
-    external: true
-#  bot_tg-ksenya-chat-bot:
-#    name: bot_tg-ksenya-chat-bot
-#    external: true
-#  tg-ksenya-chat-bot:
-#    name: tg-ksenya-chat-bot_default
-#    external: true
+  ksenia-chat-bot:
+    external:
+      name: ksenia-chat-bot

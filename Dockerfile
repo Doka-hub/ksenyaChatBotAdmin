@@ -15,7 +15,7 @@ RUN poetry config virtualenvs.create false
 COPY poetry.lock /tmp/install/
 COPY pyproject.toml /tmp/install/
 WORKDIR /tmp/install
-RUN poetry install
+RUN poetry install --no-root
 
 # Limited scope (User) context
 # Prepare app user
