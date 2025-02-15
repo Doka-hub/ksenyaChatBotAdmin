@@ -60,9 +60,6 @@ class PaymentAdmin(admin.ModelAdmin):
         ),
     )
 
-    def has_add_permission(self, request):
-        return False
-
     def display_screenshot(self, obj: Payment):
         if obj.screenshot:
             return format_html(
