@@ -12,7 +12,6 @@ def send_request_on_update(sender, instance: StartMessage, created, **kwargs):
         url = 'http://backend:8000/api/utils/messages'  # Замените на нужный URL
 
         serializer = StartMessageSerializer(instance)
-        serializer.is_valid()
         data = serializer.data
 
         # Отправка POST-запроса
