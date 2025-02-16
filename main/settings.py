@@ -161,7 +161,3 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
     ],
 }
-
-# celery
-CELERY_BROKER_URL = 'redis://redis'  # URL брокера Redis
-CELERY_RESULT_BACKEND = 'redis://redis/0'  # Backend для хранения результатов задач
