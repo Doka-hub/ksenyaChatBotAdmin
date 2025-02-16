@@ -60,7 +60,6 @@ class ButtonMessage(models.Model):
 
     class Type(models.TextChoices):
         INLINE = 'INLINE', 'Inline'
-        KEYBOARD = 'KEYBOARD', 'Keyboard'
 
     message = models.ForeignKey('StartMessage', on_delete=models.CASCADE, related_name='buttons', verbose_name='Сообщение')
     type = models.CharField(choices=Type.choices, verbose_name='Тип', max_length=10)
