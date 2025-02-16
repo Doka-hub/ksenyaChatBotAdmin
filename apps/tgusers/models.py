@@ -92,7 +92,7 @@ class StartMessageButton(models.Model):
     button = models.ForeignKey(
         ButtonMessage,
         on_delete=models.CASCADE,
-        related_name='start_messages',
+        related_name='messages',
         verbose_name='Кнопка',
     )
 
