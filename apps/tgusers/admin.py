@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.core.exceptions import ValidationError
 from django.utils.html import format_html
 
-from .models import TelegramUser, StartMessage
+from .models import TelegramUser, StartMessage, ButtonMessage
 
 
 class TelegramUserAdmin(admin.ModelAdmin):
@@ -78,6 +78,16 @@ class TelegramUserAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
         return False
 
+class ButtonMessageAdmin(admin.StackedInline):
+    model = ButtonMessage
+    extra = 0
+    fields = (
+        'type',
+        'name',
+        'url',
+        'callback_data',
+    )
+
 
 class StartMessageAdmin(admin.ModelAdmin):
     list_display = (
@@ -85,7 +95,8 @@ class StartMessageAdmin(admin.ModelAdmin):
         'photo',
         'video',
     )
-
+    inlines = (ButtonMessageAdmin,)
+    
     def save_model(self, request, obj, form, change):
         new_image = form.cleaned_data.get('photo')
         new_video = form.cleaned_data.get('video')
