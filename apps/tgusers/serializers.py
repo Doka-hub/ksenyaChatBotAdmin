@@ -15,7 +15,7 @@ class StartMessageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = StartMessage
-        fields = ['id', 'text', 'photo', 'video', 'buttons']
+        fields = ['id', 'type', 'text', 'photo', 'video', 'buttons']
 
     def get_photo_url(self, obj):
         if obj.photo:
