@@ -76,7 +76,6 @@ class ButtonMessage(models.Model):
         return f'{self.type} кнопка: {self.name}'
 
 
-
 class StartMessage(models.Model):
     class Meta:
         db_table = 'startmessage'
@@ -88,7 +87,7 @@ class StartMessage(models.Model):
         GREETER = 'GREETER', 'Приветствие'
         AFTER_SUBSCRIBE = 'AFTER_SUBSCRIBE', 'После Подписки'
 
-    type = models.CharField(max_length=255, unique=True, verbose_name='Тип')
+    type = models.CharField(max_length=255, choices=Type.choices, default=Type.GREETER, unique=True, verbose_name='Тип')
     text = models.TextField(verbose_name='Текст', blank=True, null=True)
     photo = models.ImageField(verbose_name='Изображние', upload_to='images/', blank=True, null=True)
     video = models.FileField(verbose_name='Видео', upload_to='videos/', blank=True, null=True)
