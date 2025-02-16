@@ -98,6 +98,8 @@ class StartMessageButton(models.Model):
 
     def __str__(self):
         return f'{self.message} - {self.button}'
+
+
 class StartMessage(models.Model):
     class Meta:
         db_table = 'startmessage'
@@ -110,6 +112,7 @@ class StartMessage(models.Model):
     video = models.FileField(verbose_name='Видео', upload_to='videos/', blank=True, null=True)
     buttons = models.ManyToManyField(
         ButtonMessage,
+        through=StartMessageButton,
         related_name='messages',
         verbose_name='Кнопки',
         blank=True,
