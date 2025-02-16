@@ -52,6 +52,12 @@ class TelegramUser(models.Model):
 
 
 class ButtonMessage(models.Model):
+    class Meta:
+        db_table = 'buttonmessage'
+        
+        verbose_name = 'Кнопка'
+        verbose_name_plural = 'Кнопки'
+
     class Type(models.TextChoices):
         INLINE = 'INLINE', 'Inline'
         KEYBOARD = 'KEYBOARD', 'Keyboard'
