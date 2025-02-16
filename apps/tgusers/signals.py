@@ -13,7 +13,7 @@ def send_request_on_update(sender, instance: StartMessage, created, **kwargs):
         # Подготовка данных для отправки
         data = {
             'id': instance.id,
-            'type': instance.type,
+            'type': 'start_message' if instance.type == 'GREETER' else 'after_subscribe' if instance.type == 'AFTER_SUBSCRIBE' else 'unknown',
             'text': instance.text,
             'photo': instance.get_photo_url(),
             'video': instance.get_video_url(),
