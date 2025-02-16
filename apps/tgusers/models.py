@@ -113,7 +113,6 @@ class StartMessage(models.Model):
     buttons = models.ManyToManyField(
         ButtonMessage,
         through=StartMessageButton,
-        related_name='messages',
         verbose_name='Кнопки',
         blank=True,
     )
