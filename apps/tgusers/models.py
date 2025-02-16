@@ -62,6 +62,7 @@ class ButtonMessage(models.Model):
         INLINE = 'INLINE', 'Inline'
         KEYBOARD = 'KEYBOARD', 'Keyboard'
 
+    message = models.ForeignKey('StartMessage', on_delete=models.CASCADE, related_name='buttons', verbose_name='Сообщение')
     type = models.CharField(choices=Type.choices, verbose_name='Тип', max_length=10)
     name = models.CharField(max_length=255, verbose_name='Название')
     url = models.URLField(blank=True, null=True, verbose_name='Ссылка')
@@ -76,29 +77,6 @@ class ButtonMessage(models.Model):
         return f'{self.type} кнопка: {self.name}'
 
 
-class StartMessageButton(models.Model):
-    class Meta:
-        db_table = 'startmessagebutton'
-
-        verbose_name = 'Кнопка Стартового Сообщения'
-        verbose_name_plural = 'Кнопки Стартового Сообщения'
-
-    message = models.ForeignKey(
-        'StartMessage',
-        on_delete=models.CASCADE,
-        related_name='start_message_buttons',  # изменено с "buttons"
-        verbose_name='Сообщение',
-    )
-    button = models.ForeignKey(
-        ButtonMessage,
-        on_delete=models.CASCADE,
-        related_name='messages',
-        verbose_name='Кнопка',
-    )
-
-    def __str__(self):
-        return f'{self.message} - {self.button}'
-
 
 class StartMessage(models.Model):
     class Meta:
@@ -110,12 +88,6 @@ class StartMessage(models.Model):
     text = models.TextField(verbose_name='Текст', blank=True, null=True)
     photo = models.ImageField(verbose_name='Изображние', upload_to='images/', blank=True, null=True)
     video = models.FileField(verbose_name='Видео', upload_to='videos/', blank=True, null=True)
-    buttons = models.ManyToManyField(
-        ButtonMessage,
-        through=StartMessageButton,
-        verbose_name='Кнопки',
-        blank=True,
-    )
 
     def get_photo_url(self):
         if self.photo:
