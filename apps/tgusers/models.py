@@ -86,7 +86,7 @@ class StartMessageButton(models.Model):
     message = models.ForeignKey(
         'StartMessage',
         on_delete=models.CASCADE,
-        related_name='buttons',
+        related_name='start_message_buttons',  # изменено с "buttons"
         verbose_name='Сообщение',
     )
     button = models.ForeignKey(
