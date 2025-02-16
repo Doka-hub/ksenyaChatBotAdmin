@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import SingleStartMessageView
+from .views import StartMessageView
 
 urlpatterns = [
-    path('start-message/', SingleStartMessageView.as_view(), name='start_message_list_api'),
+    path('start-message/', StartMessageView.as_view(), name='start_message_list_api'),
 ]
