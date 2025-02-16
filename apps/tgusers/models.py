@@ -54,7 +54,7 @@ class TelegramUser(models.Model):
 class ButtonMessage(models.Model):
     class Meta:
         db_table = 'buttonmessage'
-        
+
         verbose_name = 'Кнопка'
         verbose_name_plural = 'Кнопки'
 
@@ -76,6 +76,28 @@ class ButtonMessage(models.Model):
         return f'{self.type} кнопка: {self.name}'
 
 
+class StartMessageButton(models.Model):
+    class Meta:
+        db_table = 'startmessagebutton'
+
+        verbose_name = 'Кнопка Стартового Сообщения'
+        verbose_name_plural = 'Кнопки Стартового Сообщения'
+
+    message = models.ForeignKey(
+        'StartMessage',
+        on_delete=models.CASCADE,
+        related_name='buttons',
+        verbose_name='Сообщение',
+    )
+    button = models.ForeignKey(
+        ButtonMessage,
+        on_delete=models.CASCADE,
+        related_name='start_messages',
+        verbose_name='Кнопка',
+    )
+
+    def __str__(self):
+        return f'{self.message} - {self.button}'
 class StartMessage(models.Model):
     class Meta:
         db_table = 'startmessage'
@@ -86,7 +108,12 @@ class StartMessage(models.Model):
     text = models.TextField(verbose_name='Текст', blank=True, null=True)
     photo = models.ImageField(verbose_name='Изображние', upload_to='images/', blank=True, null=True)
     video = models.FileField(verbose_name='Видео', upload_to='videos/', blank=True, null=True)
-    buttons = models.ManyToManyField(ButtonMessage, verbose_name='Кнопки', blank=True)
+    buttons = models.ManyToManyField(
+        ButtonMessage,
+        related_name='messages',
+        verbose_name='Кнопки',
+        blank=True,
+    )
 
     def get_photo_url(self):
         if self.photo:
