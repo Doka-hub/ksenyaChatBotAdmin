@@ -86,12 +86,6 @@ class StartMessageAdmin(admin.ModelAdmin):
         'video',
     )
 
-    def has_add_permission(self, request):
-        return False
-
-    def has_delete_permission(self, request, obj=None):
-        return False
-
     def save_model(self, request, obj, form, change):
         new_image = form.cleaned_data.get('photo')
         new_video = form.cleaned_data.get('video')
