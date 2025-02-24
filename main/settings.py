@@ -47,7 +47,6 @@ INSTALLED_APPS = [
 
     # apps
     'apps.tgusers',
-    'apps.channels',
 ]
 
 MIDDLEWARE = [
