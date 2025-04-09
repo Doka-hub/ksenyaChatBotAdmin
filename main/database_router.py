@@ -1,5 +1,5 @@
 class DBRouter:
-    bot_app_labels = ['channels', 'payments', 'tgusers']
+    bot_app_labels = ['channels', 'payments', 'tgusers', 'notifications']
 
     def db_for_read(self, model, **hints):
         if model._meta.app_label in self.bot_app_labels:

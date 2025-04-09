@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
     # apps
     'apps.tgusers',
+    'apps.notifications',
 ]
 
 MIDDLEWARE = [
