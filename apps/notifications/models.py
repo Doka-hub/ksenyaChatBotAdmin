@@ -7,23 +7,26 @@ class Notification(models.Model):
     def upload_to(self, filename):
         return f'notifications/notification_{self.id}/{filename}'
 
+    class Filters(models.TextChoices):
+        ALL = 'ALL', 'Всем'
+        TEST = 'TEST', 'Тест'
+
     users = models.ManyToManyField(
         TelegramUser,
         related_name='notifications',
         through='UsersNotifications',
         verbose_name='ТГ Пользователи',
     )
-    # image = models.ImageField(
-    #     verbose_name='Изображение',
-    #     upload_to=upload_to,
-    #     blank=True,
-    #     null=True,
-    # )
-    # file = models.FileField(verbose_name='Файл', upload_to=upload_to, blank=True, null=True)
 
     text = models.TextField(verbose_name='Текст')
 
     send_separately = models.BooleanField(default=False, verbose_name='Отправить в отдельности')
+    filters = models.CharField(
+        max_length=255,
+        choices=Filters.choices,
+        default=Filters.ALL,
+        verbose_name='Фильтры',
+    )
     send_all = models.BooleanField(default=False, verbose_name='Отправить всем')
 
     created = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
