@@ -1,18 +1,30 @@
+import requests
 from django.contrib import admin
 
-import requests
-
 from apps.tgusers.models import TelegramUser
-from apps.utils.admin import BotDBModelAdmin
+from apps.utils.admin import BotDBModelAdmin, BotDBStackedInline
 from .models import (
     Notification,
+    NotificationButton,
+    NotificationImage,
     UsersNotifications,
 )
+
+
+class NotificationButtonInline(BotDBStackedInline):
+    model = NotificationButton
+    extra = 0
+
+
+class NotificationImageInline(BotDBStackedInline):
+    model = NotificationImage
+    extra = 0
 
 
 class NotificationAdmin(BotDBModelAdmin):
     list_display = ['id', 'users_ids']
     exclude = ['file']
+    inlines = [NotificationButtonInline, NotificationImageInline]
 
     def users_ids(self, obj: Notification):
         return [user.id for user in obj.users.all()]
@@ -34,7 +46,7 @@ class NotificationAdmin(BotDBModelAdmin):
                         is_active=True,
                         is_bot_blocked=False
                 ).exclude(
-                        users_notifications__notification=obj,
+                    users_notifications__notification=obj,
                 ):
                     users_to_notify.append(
                         UsersNotifications(

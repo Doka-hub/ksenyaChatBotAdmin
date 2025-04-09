@@ -37,6 +37,33 @@ class Notification(models.Model):
         return f'Уведомление #{self.id}'
 
 
+class NotificationButton(models.Model):
+    class Meta:
+        db_table = 'notificationbutton'
+
+    notification = models.ForeignKey(
+        Notification,
+        models.CASCADE,
+        related_name='buttons',
+        verbose_name='Уведомление',
+    )
+    text = models.CharField(max_length=255, verbose_name='Текст')
+    url = models.URLField(null=True, blank=True, verbose_name='Ссылка')
+
+
+class NotificationImage(models.Model):
+    class Meta:
+        db_table = 'notificationimage'
+
+    notification = models.ForeignKey(
+        Notification,
+        models.CASCADE,
+        related_name='images',
+        verbose_name='Уведомление',
+    )
+    image = models.ImageField(upload_to='notifications', verbose_name='Картинка')
+
+
 class UsersNotifications(models.Model):
     user = models.ForeignKey(TelegramUser, models.CASCADE, related_name='users_notifications')
     notification = models.ForeignKey(
