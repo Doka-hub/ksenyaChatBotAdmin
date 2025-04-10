@@ -2,7 +2,7 @@ import requests
 from django.contrib import admin
 
 from apps.tgusers.models import TelegramUser
-from apps.utils.admin import BotDBModelAdmin, BotDBStackedInline
+from apps.utils.admin import BotDBModelAdmin, BotDBStackedInline, BotDBTabularInline
 from .models import (
     Notification,
     NotificationButton,
@@ -10,6 +10,29 @@ from .models import (
     UsersNotifications,
 )
 
+
+class TGUsersNotificationInline(BotDBTabularInline):
+    model = UsersNotifications
+    extra = 1
+    readonly_fields = ['delivered_time']
+
+    def get_field_queryset(self, db, db_field, request):
+        """
+            Фильтрует только активных пользователей
+        :param db:
+        :param db_field:
+        :param request:
+        :return:
+        """
+        related_admin = self.admin_site._registry.get(db_field.remote_field.model)
+        ordering = related_admin.get_ordering(request)
+        if db_field.name == 'user':
+            return TelegramUser.objects.filter(is_active=True, is_bot_blocked=False).order_by(
+                *ordering
+            )
+
+
+#         return super(TGUsersNotificationInline, self).get_field_queryset(db, db_field, request)
 
 class NotificationButtonInline(BotDBStackedInline):
     model = NotificationButton
@@ -22,12 +45,14 @@ class NotificationImageInline(BotDBStackedInline):
 
 
 class NotificationAdmin(BotDBModelAdmin):
-    list_display = ['id', 'users_ids']
+    list_display = ['id', 'title']
     exclude = ['file']
-    inlines = [NotificationButtonInline, NotificationImageInline]
+    inlines = [NotificationButtonInline, NotificationImageInline, TGUsersNotificationInline]
 
-    def users_ids(self, obj: Notification):
-        return [user.id for user in obj.users.all()]
+    def title(self, obj: Notification):
+        return obj.text.split(' ')[0] if obj.text else ''
+
+    title.short_description = 'Название'
 
     def save_model(self, request, obj: Notification, form, change):
         if not obj.pk:
@@ -38,6 +63,15 @@ class NotificationAdmin(BotDBModelAdmin):
                 'type': 'default',
                 'notification_id': obj.id,
                 'message': obj.text,
+                'buttons': [
+                    {
+                        'name': button.text,
+                        'url': button.url,
+                    } for button in obj.buttons.all()
+                ],
+                'image': [
+                    'https://bot.chertovich.com' + image.image.url for image in obj.images.all()
+                ],
             }
 
             if obj.send_all:

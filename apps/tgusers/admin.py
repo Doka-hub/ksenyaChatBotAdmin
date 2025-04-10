@@ -2,31 +2,7 @@ from django.contrib import admin
 from django.core.exceptions import ValidationError
 from django.utils.html import format_html
 
-from apps.utils.admin import BotDBTabularInline
 from .models import TelegramUser, StartMessage, ButtonMessage
-
-
-#
-# class TGUsersNotificationInline(BotDBTabularInline):
-#     model = TelegramUser.notifications.through
-#     extra = 1
-#     readonly_fields = ['delivered_time']
-#
-#     def get_field_queryset(self, db, db_field, request):
-#         """
-#             Фильтрует только активных пользователей
-#         :param db:
-#         :param db_field:
-#         :param request:
-#         :return:
-#         """
-#         related_admin = self.admin_site._registry.get(db_field.remote_field.model)
-#         ordering = related_admin.get_ordering(request)
-#         if db_field.name == 'user':
-#             return TelegramUser.objects.filter(is_active=True, is_bot_blocked=False).order_by(
-#                 *ordering
-#             )
-#         return super(TGUsersNotificationInline, self).get_field_queryset(db, db_field, request)
 
 
 class TelegramUserAdmin(admin.ModelAdmin):
