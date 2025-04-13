@@ -69,7 +69,7 @@ class NotificationAdmin(BotDBModelAdmin):
                         'url': button.url,
                     } for button in obj.buttons.all()
                 ],
-                'image': [
+                'images': [
                     'https://bot.chertovich.com' + image.image.url for image in obj.images.all()
                 ],
             }
