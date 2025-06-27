@@ -53,11 +53,11 @@ class NotificationAdmin(BotDBModelAdmin):
     title.short_description = 'Название'
 
     def get_inlines(self, request, obj):
-        if request.method == 'POST':
-            inlines = self.inlines
-        else:
-            inlines = [NotificationButtonInline, NotificationImageInline]
-        return inlines
+        if obj is None:  # создание нового объекта
+            return [NotificationButtonInline, NotificationImageInline, TGUsersNotificationInline]
+        return [NotificationButtonInline,
+            NotificationImageInline]  # просмотр или редактирование существующего
+
     def save_model(self, request, obj: Notification, form, change):
         if not obj.pk:
             obj.save(using=self.using)
