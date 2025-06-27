@@ -32,8 +32,6 @@ class TGUsersNotificationInline(BotDBTabularInline):
             )
 
 
-#         return super(TGUsersNotificationInline, self).get_field_queryset(db, db_field, request)
-
 class NotificationButtonInline(BotDBStackedInline):
     model = NotificationButton
     extra = 0
@@ -46,7 +44,7 @@ class NotificationImageInline(BotDBStackedInline):
 
 class NotificationAdmin(BotDBModelAdmin):
     list_display = ['id', 'title']
-    exclude = ['file']
+    exclude = ['file', 'filters']
     inlines = [NotificationButtonInline, NotificationImageInline, TGUsersNotificationInline]
 
     def title(self, obj: Notification):
@@ -54,6 +52,12 @@ class NotificationAdmin(BotDBModelAdmin):
 
     title.short_description = 'Название'
 
+    def get_inlines(self, request, obj):
+        if request.method == 'POST':
+            inlines = self.inlines
+        else:
+            inlines = [NotificationButtonInline, NotificationImageInline]
+        return inlines
     def save_model(self, request, obj: Notification, form, change):
         if not obj.pk:
             obj.save(using=self.using)

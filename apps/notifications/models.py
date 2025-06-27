@@ -20,13 +20,13 @@ class Notification(models.Model):
 
     text = models.TextField(verbose_name='Текст')
 
-    send_separately = models.BooleanField(default=False, verbose_name='Отправить в отдельности')
     filters = models.CharField(
         max_length=255,
         choices=Filters.choices,
         default=Filters.ALL,
         verbose_name='Фильтры',
     )
+    send_separately = models.BooleanField(default=False, verbose_name='Отправить в отдельности')
     send_all = models.BooleanField(default=False, verbose_name='Отправить всем')
 
     created = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
